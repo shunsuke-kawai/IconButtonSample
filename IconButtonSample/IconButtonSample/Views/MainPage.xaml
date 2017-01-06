@@ -1,0 +1,73 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="IconButtonSample.Views.MainPage"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:control="clr-namespace:IconButtonSample.Controls"
+    xmlns:converters="clr-namespace:IconButtonSample.Converters"
+    xmlns:prism="clr-namespace:Prism.Mvvm;assembly=Prism.Forms"
+    Title="MainPage"
+    prism:ViewModelLocator.AutowireViewModel="True">
+    <ContentPage.Padding>
+        <OnPlatform
+            x:TypeArguments="Thickness"
+            Android="0"
+            WinPhone="0"
+            iOS="0, 20, 0, 0" />
+    </ContentPage.Padding>
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <converters:ImageSourceConverter x:Key="ImageSourceConverter" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <StackLayout VerticalOptions="Center">
+        <Grid BackgroundColor="Gray">
+            <control:IconButton
+                HeightRequest="50"
+                HorizontalOptions="Center"
+                IconMargin="10"
+                IconSource="{Binding Source=IconButtonSample.Images.Trash.png, Converter={StaticResource ImageSourceConverter}}"
+                VerticalOptions="Center">
+                <control:IconButton.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding Path=DeleteCommand}" />
+                </control:IconButton.GestureRecognizers>
+            </control:IconButton>
+        </Grid>
+        <Grid BackgroundColor="Black">
+            <control:IconButton
+                HeightRequest="70"
+                HorizontalOptions="Center"
+                IconMargin="10"
+                IconSource="{Binding Source=IconButtonSample.Images.Trash.png, Converter={StaticResource ImageSourceConverter}}"
+                VerticalOptions="Center">
+                <control:IconButton.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding Path=DeleteCommand}" />
+                </control:IconButton.GestureRecognizers>
+            </control:IconButton>
+        </Grid>
+        <Grid BackgroundColor="Red">
+            <control:IconButton
+                HeightRequest="80"
+                HorizontalOptions="Center"
+                IconMargin="10"
+                IconSource="{Binding Source=IconButtonSample.Images.Trash.png, Converter={StaticResource ImageSourceConverter}}"
+                VerticalOptions="Center">
+                <control:IconButton.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding Path=DeleteCommand}" />
+                </control:IconButton.GestureRecognizers>
+            </control:IconButton>
+        </Grid>
+        <Grid BackgroundColor="Blue">
+            <control:IconButton
+                HeightRequest="30"
+                HorizontalOptions="Center"
+                IconMargin="5"
+                IconSource="{Binding Source=IconButtonSample.Images.Trash.png, Converter={StaticResource ImageSourceConverter}}"
+                VerticalOptions="Center">
+                <control:IconButton.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding Path=DeleteCommand}" />
+                </control:IconButton.GestureRecognizers>
+            </control:IconButton>
+        </Grid>
+    </StackLayout>
+</ContentPage>
