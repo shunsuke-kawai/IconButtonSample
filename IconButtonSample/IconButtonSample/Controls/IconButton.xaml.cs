@@ -1,4 +1,5 @@
-﻿using System;
+﻿using IconButtonSample.Abstractions;
+using System;
 using System.Threading.Tasks;
 
 using Xamarin.Forms;
@@ -49,9 +50,119 @@ namespace IconButtonSample.Controls
             set
             {
                 SetValue(IconMarginProperty, value);
-                imgIcon.Margin = value;
+                grdIconButton.Margin = value;
             }
         }
+
+        public static readonly BindableProperty IconHeightProperty =
+            BindableProperty.Create(
+                "IconHeight",
+                typeof(double),
+                typeof(IconButton),
+                0d,
+                propertyChanged: (bindable, oldValue, newValue) =>
+                {
+                    ((IconButton)bindable).IconHeight = (double)newValue;
+                }
+            );
+        public double IconHeight
+        {
+            get { return (double)GetValue(IconHeightProperty); }
+            set
+            {
+                SetValue(IconHeightProperty, value);
+                imgIcon.HeightRequest = value;
+            }
+        }
+
+        public static readonly BindableProperty DescriptionPositionProperty =
+            BindableProperty.Create(
+                "DescriptionPosition",
+                typeof(DescriptionPosition),
+                typeof(IconButton),
+                DescriptionPosition.None,
+                propertyChanged: (bindable, oldValue, newValue) =>
+                {
+                    ((IconButton)bindable).DescriptionPosition = (DescriptionPosition)newValue;
+                }
+            );
+
+        public DescriptionPosition DescriptionPosition
+        {
+            get { return (DescriptionPosition)GetValue(DescriptionPositionProperty); }
+            set
+            {
+                SetValue(DescriptionPositionProperty, value);
+                setPosition(value);
+            }
+        }
+
+        public static readonly BindableProperty DescriptionSizeProperty =
+            BindableProperty.Create(
+                "DescriptionSize",
+                typeof(double),
+                typeof(IconButton),
+                0d,
+                propertyChanged: (bindable, oldValue, newValue) =>
+                {
+                    ((IconButton)bindable).DescriptionSize = (double)newValue;
+                }
+            );
+
+        public double DescriptionSize
+        {
+            get { return (double)GetValue(DescriptionSizeProperty); }
+            set
+            {
+                SetValue(DescriptionSizeProperty, value);
+                lblDescription.FontSize = value;
+            }
+        }
+
+
+        public static readonly BindableProperty DescriptionColorProperty =
+            BindableProperty.Create(
+                "DescriptionColor",
+                typeof(Color),
+                typeof(IconButton),
+                Color.Black,
+                propertyChanged: (bindable, oldValue, newValue) =>
+                {
+                    ((IconButton)bindable).DescriptionColor = (Color)newValue;
+                }
+            );
+
+        public Color DescriptionColor
+        {
+            get { return (Color)GetValue(DescriptionColorProperty); }
+            set
+            {
+                SetValue(DescriptionColorProperty, value);
+                lblDescription.TextColor = value;
+            }
+        }
+
+        public string DescriptionText
+        {
+            get { return (string)GetValue(DescriptionTextProperty); }
+            set
+            {
+                SetValue(DescriptionTextProperty, value);
+                lblDescription.Text = value;
+            }
+        }
+
+        public static readonly BindableProperty DescriptionTextProperty =
+            BindableProperty.Create(
+                "DescriptionText",
+                typeof(string),
+                typeof(IconButton),
+                string.Empty,
+                propertyChanged: (bindable, oldValue, newValue) =>
+                {
+                    ((IconButton)bindable).DescriptionText = (string)newValue;
+                }
+            );
 
         public IconButton()
         {
@@ -81,6 +192,46 @@ namespace IconButtonSample.Controls
             await imgIcon.ScaleTo(0.8, 75);
             await imgIcon.ScaleTo(1.0, 75);
             BackgroundColor = Color.Transparent;
+        }
+
+        private void setPosition(DescriptionPosition position)
+        {
+            switch (position)
+            {
+                case DescriptionPosition.None:
+                    imgIcon.SetValue(Grid.RowProperty, 0);
+                    lblDescription.SetValue(Grid.RowProperty, 0);
+                    imgIcon.SetValue(Grid.ColumnProperty, 0);
+                    lblDescription.SetValue(Grid.ColumnProperty, 0);
+                    lblDescription.IsVisible = false;
+                    break;
+                case DescriptionPosition.Left:
+                    imgIcon.SetValue(Grid.RowProperty, 0);
+                    lblDescription.SetValue(Grid.RowProperty, 0);
+                    imgIcon.SetValue(Grid.ColumnProperty, 1);
+                    lblDescription.SetValue(Grid.ColumnProperty, 0);
+                    break;
+                case DescriptionPosition.Top:
+                    imgIcon.SetValue(Grid.RowProperty, 1);
+                    lblDescription.SetValue(Grid.RowProperty, 0);
+                    imgIcon.SetValue(Grid.ColumnProperty, 0);
+                    lblDescription.SetValue(Grid.ColumnProperty, 0);
+                    break;
+                case DescriptionPosition.Right:
+                    imgIcon.SetValue(Grid.RowProperty, 0);
+                    lblDescription.SetValue(Grid.RowProperty, 0);
+                    imgIcon.SetValue(Grid.ColumnProperty, 0);
+                    lblDescription.SetValue(Grid.ColumnProperty, 1);
+                    break;
+                case DescriptionPosition.Bottom:
+                    imgIcon.SetValue(Grid.RowProperty, 0);
+                    lblDescription.SetValue(Grid.RowProperty, 1);
+                    imgIcon.SetValue(Grid.ColumnProperty, 0);
+                    lblDescription.SetValue(Grid.ColumnProperty, 0);
+                    break;
+                default:
+                    break;
+            }
         }
     }
 }
